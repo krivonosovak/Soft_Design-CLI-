@@ -1,10 +1,10 @@
 package ru.spbau.mit.command;
 
-import com.oracle.tools.packager.IOUtils;
-import ru.spbau.mit.execute.Scope;
-import ru.spbau.mit.parse.CommandBuilder;
 
-import java.io.FileInputStream;
+import ru.spbau.mit.exceptions.BadArguments;
+import ru.spbau.mit.execute.Scope;
+
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -27,44 +27,34 @@ public class Cat extends Command{
      * input stream (either provided beforehand or from stdin). Otherwise the first argument is treated as a filename
      * that is loaded into memory and which contents gets printed to the output.
      * @param scope
-     * @param inStrem
-     * @return
-     * @throws Exception
+     * @param inStream
+     * @throws  // тут поправить с исключением
      */
     @Override
-    public String execute(Scope scope, String inStrem)throws Exception{
+    public String execute(Scope scope, String inStream) throws IOException, BadArguments {
 
         String result = "";
 
-        if(arguments.size() == 0 && inStrem.equals("")){
-
+        if (arguments.size() == 0 && inStream.isEmpty()) {
             Scanner scanner = new Scanner(System.in);
             StringBuilder sb = new StringBuilder();
-            while(scanner.hasNext())
-            {
-
+            while (scanner.hasNext()) {
                 sb.append(scanner.nextLine());
             }
             result = sb.toString();
-
-        }else if(arguments.size() == 0){
-
-            result = inStrem;
-
-        }else if (arguments.size() == 1){
-
+        } else if (arguments.size() == 0) {
+            result = inStream;
+        } else if (arguments.size() == 1) {
             Path path = Paths.get(arguments.get(0));
-            if (Files.exists(path)){
+            if (Files.exists(path)) {
                 result = new String(Files.readAllBytes(path));
-            }else{
-                throw new Exception("no such file " + arguments.get(0));
+            } else {
+                throw new IOException(arguments.get(0) + ": Not such file"); // тут нужно создать свое исключение
             }
-
-
-        }else{
-
-            throw new Exception("cat: too many arguments");
+        } else {
+            throw new BadArguments("cat");
         }
+
         return result;
     }
 }

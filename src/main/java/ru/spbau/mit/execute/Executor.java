@@ -1,7 +1,10 @@
 package ru.spbau.mit.execute;
 
-import ru.spbau.mit.command.*;
+import ru.spbau.mit.command.Command;
+import ru.spbau.mit.exceptions.BadArguments;
 
+
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -16,10 +19,8 @@ public class Executor {
      * @param scope the current CLI scope
      * @param chainOfCommand a list of command to be executed in this particular order
      * @return an output of the last command (if any)
-     * @throws Exception
      */
-    public String exec(Scope scope, List<Command> chainOfCommand) throws Exception
-    {
+    public String exec(Scope scope, List<Command> chainOfCommand) throws IOException, BadArguments {
         String outPut = "";
         for (Command command: chainOfCommand){
             outPut = command.execute(scope, outPut);

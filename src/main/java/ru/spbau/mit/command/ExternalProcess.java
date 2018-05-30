@@ -3,9 +3,6 @@ package ru.spbau.mit.command;
 import ru.spbau.mit.execute.Scope;
 
 import java.io.*;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,11 +21,9 @@ public class ExternalProcess extends Command {
      * of this command.
      * @param scope
      * @param inStream
-     * @return
-     * @throws Exception
      */
     @Override
-    public String execute(Scope scope, String inStream)throws Exception {
+    public String execute(Scope scope, String inStream)throws IOException {
         ProcessBuilder probuilder = new ProcessBuilder(arguments);
         Process process = probuilder.start();
 

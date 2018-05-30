@@ -29,7 +29,6 @@ public class Equals extends Command{
      * does not read anything from input.
      * @param scope
      * @param inStream
-     * @return
      */
     @Override
     public String execute(Scope scope, String inStream)

@@ -1,8 +1,9 @@
-package ru.spbau.mit.command;
+package ru.spbau.mit;
 
-import org.junit.After;
-import org.junit.Before;
+
+
 import org.junit.Test;
+import ru.spbau.mit.command.Equals;
 import ru.spbau.mit.execute.Scope;
 
 import java.util.Arrays;
@@ -12,25 +13,13 @@ import static org.junit.Assert.*;
 
 public class EqualsTest {
 
-    private Equals equals;
-    private Scope scope;
-
-    @Before
-    public void setUp() throws Exception {
-        scope = new Scope();
-    }
-
-    @After
-    public void tearDown() throws Exception {
-        equals = null;
-        scope = null;
-    }
 
     @Test
     public void testEmptyScope() {
         // given
+        Scope scope = new Scope();
         List<String> arguments = Arrays.asList("foo", "bar");
-        equals = new Equals(arguments);
+        Equals equals = new Equals(arguments);
         // when
         equals.execute(scope, "");
         // then
@@ -40,8 +29,9 @@ public class EqualsTest {
     @Test
     public void testOverwriteExistingScope() {
         // given
+        Scope scope = new Scope();
         List<String> arguments = Arrays.asList("foo", "bar");
-        equals = new Equals(arguments);
+        Equals equals = new Equals(arguments);
         // when
         scope.add("foo", "bigger FOO");
         equals.execute(scope, "");

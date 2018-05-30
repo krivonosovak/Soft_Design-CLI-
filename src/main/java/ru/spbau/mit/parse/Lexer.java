@@ -30,24 +30,24 @@ public class Lexer {
 
         for (String token: tokens){
 
-            String new_token = token;
+            String newToken = token;
 
             if (token.charAt(0) == '\'') {
-                new_token = new_token.substring(1, new_token.length() - 1);
-                result.add(new_token);
+                newToken = newToken.substring(1, newToken.length() - 1);
+                result.add(newToken);
                 continue;
             }
 
             Matcher matcher = pattern.matcher(token);
             while (matcher.find()) {
                 String value_x = scope.get(matcher.group(2));
-                new_token = new_token.replace(matcher.group(1), value_x);
+                newToken = newToken.replace(matcher.group(1), value_x);
             }
 
             if (token.charAt(0) ==  '"'){
-                new_token = new_token.substring(1, new_token.length() - 1);
+                newToken = newToken.substring(1, newToken.length() - 1);
             }
-            result.add(new_token);
+            result.add(newToken);
         }
         return result;
     }

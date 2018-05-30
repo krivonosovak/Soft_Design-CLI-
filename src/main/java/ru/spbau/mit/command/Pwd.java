@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Pwd outputs the current working directory path and nothing more
  */
-public class Pwd extends Command{
+public class Pwd extends Command {
 
     public Pwd(List<String> arguments) {
         super(arguments);
@@ -19,7 +19,6 @@ public class Pwd extends Command{
      * Retuns the current working directory path
      * @param scope
      * @param inStream
-     * @return
      */
     @Override
     public String execute(Scope scope, String inStream) {

@@ -1,7 +1,9 @@
 package ru.spbau.mit.command;
 
+import ru.spbau.mit.exceptions.BadArguments;
 import ru.spbau.mit.execute.Scope;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +14,8 @@ import java.util.List;
  * all its abstract methods.
  */
 public abstract class Command {
-    public List<String> arguments;
+
+    List<String> arguments;
 
     /**
      * Creates a new command with the given arguments
@@ -26,8 +29,6 @@ public abstract class Command {
      * Executes the command in the given scope and with the given input. Returns its output as a result
      * @param scope
      * @param inStream
-     * @return
-     * @throws Exception
      */
-    public abstract String execute(Scope scope, String inStream)throws Exception;
+    public abstract String execute(Scope scope, String inStream)throws IOException, BadArguments;
 }

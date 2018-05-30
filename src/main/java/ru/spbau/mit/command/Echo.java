@@ -2,8 +2,6 @@ package ru.spbau.mit.command;
 
 import ru.spbau.mit.execute.Scope;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
 /**

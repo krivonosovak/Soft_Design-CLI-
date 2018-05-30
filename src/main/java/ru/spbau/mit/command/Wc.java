@@ -1,7 +1,9 @@
 package ru.spbau.mit.command;
 
+import ru.spbau.mit.exceptions.BadArguments;
 import ru.spbau.mit.execute.Scope;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -12,7 +14,7 @@ import java.util.StringTokenizer;
 /**
  * Wc is an ad-hoc implementation of wc(1) that counts lines, words and size in bytes in the given file/input stream
  */
-public class Wc extends Command{
+public class Wc extends Command {
 
     public Wc(List<String> arguments) {
         super(arguments);
@@ -30,37 +32,27 @@ public class Wc extends Command{
      * @throws Exception
      */
     @Override
-    public String execute(Scope scope, String inStrem)throws Exception{
+    public String execute(Scope scope, String inStrem)throws IOException, BadArguments {
 
         String result = "";
-
-        if(arguments.size() == 0 && inStrem.equals("")){
-
+        if (arguments.size() == 0 && inStrem.equals("")) {
             Scanner scanner = new Scanner(System.in);
             StringBuilder sb = new StringBuilder();
-            while(scanner.hasNext())
-            {
+            while (scanner.hasNext()) {
                 sb.append(scanner.nextLine());
             }
             result = sb.toString();
-
-        }else if(arguments.size() == 0){
-
+        } else if (arguments.size() == 0) {
             result = inStrem;
-
-        }else if (arguments.size() == 1){
-
-
+        } else if (arguments.size() == 1) {
             Path path = Paths.get(arguments.get(0));
-            if (Files.exists(path)){
+            if (Files.exists(path)) {
                 result = new String(Files.readAllBytes(path));
-            }else{
-                throw new Exception("no such file " + arguments.get(0));
+            } else {
+                throw new IOException(arguments.get(0) + ": Not such file");
             }
-
-        }else{
-
-            throw new Exception("cat: too many arguments");
+        } else {
+            throw new BadArguments("wc");
         }
 
         final byte[] utf8Bytes = result.getBytes("UTF-8");

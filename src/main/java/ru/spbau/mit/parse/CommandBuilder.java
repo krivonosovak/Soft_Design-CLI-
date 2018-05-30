@@ -1,6 +1,10 @@
 package ru.spbau.mit.parse;
 
-import ru.spbau.mit.command.*;
+import ru.spbau.mit.command.Command;
+import ru.spbau.mit.command.Equals;
+import ru.spbau.mit.exceptions.BadArguments;
+import ru.spbau.mit.exceptions.BadCommand;
+import ru.spbau.mit.exceptions.UnbalancedQuotes;
 import ru.spbau.mit.execute.Scope;
 
 import java.lang.reflect.Constructor;
@@ -28,10 +32,8 @@ public class CommandBuilder {
      * @param scope the current CLI scope
      * @param proc the raw user input string
      * @return the list of commands that are ready to be executed
-     * @throws Exception
      */
-    public List<Command> buildChainOfCommand(Scope scope, String proc)throws Exception
-    {
+    public List<Command> buildChainOfCommand(Scope scope, String proc) throws UnbalancedQuotes, BadCommand {
         List<String> tokens = par.parse(proc);
         tokens = lex.expand(scope, tokens);
 
@@ -42,19 +44,17 @@ public class CommandBuilder {
             String item = tokens.get(i);
 
             // Case for variable assignments
-            if (i == 0 && item.contains("=")){
+            if (i == 0 && item.contains("=")) {
 
                 List<String> args = Arrays.asList(item.split("="));
                 chainOfCommand.add((Command)new Equals(args));
                 currentArguments.clear();
                 break;
             }
-
             if (!item.equals("|") && i != tokens.size()-1) {
                 currentArguments.add(item);
                 continue;
             }
-
             if (i == tokens.size() -1 ) {
                 currentArguments.add(item);
             }
@@ -67,21 +67,24 @@ public class CommandBuilder {
     }
 
 
-    private Command makeCommand(String name, List<String> arguments) throws Exception {
+    private Command makeCommand(String name, List<String> arguments) throws BadCommand {
 
         String className = "ru.spbau.mit.command." + name.substring(0, 1).toUpperCase() + name.substring(1);
-        Command cmd;
-        try{
+        Command cmd = null;
+        try {
             Class  newClass = Class.forName(className);
             Constructor cons = newClass.getConstructor(List.class);
             arguments.remove(0);
             cmd = (Command)cons.newInstance(arguments);
-        }catch (ClassNotFoundException exc){
-
-            className = "ru.spbau.mit.command.ExternalProcess";
+        } catch (Exception exc) {
+            try {
+            className = "ExternalProcess";
             Class  newClass = Class.forName(className);
             Constructor cons = newClass.getConstructor(List.class);
             cmd = (Command)cons.newInstance(arguments);
+            } catch (Exception exc1) {
+                new BadCommand(name);
+            }
         }
 
         return cmd;

@@ -1,5 +1,7 @@
 package ru.spbau.mit.parse;
 
+import ru.spbau.mit.exceptions.UnbalancedQuotes;
+
 import javax.naming.NameNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,7 +19,7 @@ public class Parser {
      * @param toProcess a raw user input as a string
      * @return a list of strings - tokens each of which represents a single command line argument
      */
-    public List<String> parse(String toProcess){
+    public List<String> parse(String toProcess) throws UnbalancedQuotes {
         if (toProcess == null || toProcess.length() == 0) {
             //no command? no string
             return new ArrayList<>();
@@ -75,7 +77,7 @@ public class Parser {
             result.add(current.toString());
         }
         if (state == inQuote || state == inDoubleQuote) {
-            throw new RuntimeException("unbalanced quotes in " + toProcess);
+            throw new UnbalancedQuotes(toProcess);
         }
         return Arrays.asList(result.toArray(new String[result.size()]));
     }

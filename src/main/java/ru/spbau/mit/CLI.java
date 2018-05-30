@@ -1,23 +1,27 @@
 package ru.spbau.mit;
 
+import org.apache.commons.cli.*;
 import ru.spbau.mit.command.Command;
+import ru.spbau.mit.exceptions.BadArguments;
+import ru.spbau.mit.exceptions.BadCommand;
+import ru.spbau.mit.exceptions.UnbalancedQuotes;
 import ru.spbau.mit.execute.Executor;
 import ru.spbau.mit.execute.Scope;
 import ru.spbau.mit.parse.*;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.IOException;
 import java.util.*;
 
-
+/**
+ * The main class that parses user input, maps it into commands and executes them.
+ */
 public class CLI {
 
     /**
      * The main workflow method of this utility
-     * @param args - ignored
-     * @throws Exception
+     * @param args ignored
      */
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws ParseException {
 
         Scanner scanner = new Scanner(System.in);
         CommandBuilder cb = new CommandBuilder();
@@ -26,16 +30,13 @@ public class CLI {
 
         while (true) {
             String command = scanner.nextLine();
-            try
-            {
+            try {
                 List<Command> lc = cb.buildChainOfCommand(scope, command);
                 String result = ex.exec(scope, lc);
                 System.out.println(result);
-            }catch (Exception e)
-            {
+            } catch (IOException | BadCommand | UnbalancedQuotes | BadArguments e) {
                 System.out.println(e.getMessage());
             }
-
         }
     }
 }
