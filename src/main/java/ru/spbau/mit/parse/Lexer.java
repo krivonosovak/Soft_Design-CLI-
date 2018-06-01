@@ -23,7 +23,7 @@ public class Lexer {
      * @param tokens a list of tokenized strings from Parser
      * @return a list of expanded tokens
      */
-    public List<String> expand(Scope scope, List<String> tokens){
+    public List<String> expand(Scope scope, List<String> tokens) {
 
         List<String> result = new ArrayList<String>();
         Pattern pattern = Pattern.compile("(\\$([\\w]+))");

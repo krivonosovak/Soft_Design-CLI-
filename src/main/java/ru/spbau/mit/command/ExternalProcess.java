@@ -19,11 +19,9 @@ public class ExternalProcess extends Command {
      * When executed this command tries to to execute an external program by its name (passed as the first argument)
      * Other arguments are interpreted as arguments for this external program. Its output is then returned as an output
      * of this command.
-     * @param scope
-     * @param inStream
      */
     @Override
-    public String execute(Scope scope, String inStream)throws IOException {
+    public String execute(Scope scope, String inStream) throws IOException {
         ProcessBuilder probuilder = new ProcessBuilder(arguments);
         Process process = probuilder.start();
 

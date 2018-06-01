@@ -18,9 +18,6 @@ public class Echo extends Command{
      *
      * Echo implementation details: when executed without arguments, echo outputs whatever was passed as its input.
      * Otherwise it contacts all arguments and prints them as a whole.
-     * @param scope
-     * @param inStream
-     * @return
      */
     @Override
     public String execute(Scope scope, String inStream)

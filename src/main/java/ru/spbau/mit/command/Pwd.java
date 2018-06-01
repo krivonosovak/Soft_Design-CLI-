@@ -17,8 +17,6 @@ public class Pwd extends Command {
 
     /**
      * Retuns the current working directory path
-     * @param scope
-     * @param inStream
      */
     @Override
     public String execute(Scope scope, String inStream) {

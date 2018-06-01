@@ -13,7 +13,7 @@ public class Scope {
     /**
      * Registers a new value for the given variable name (key), overwriting the previous value if any.
      * @param key a variable name
-     * @param value
+     * @param value new value
      */
     public void add(String key, String value){
         scope.put(key, value);

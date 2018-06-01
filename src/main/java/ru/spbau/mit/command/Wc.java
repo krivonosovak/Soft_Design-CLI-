@@ -1,6 +1,6 @@
 package ru.spbau.mit.command;
 
-import ru.spbau.mit.exceptions.BadArguments;
+import ru.spbau.mit.exceptions.BadArgumentsException;
 import ru.spbau.mit.execute.Scope;
 
 import java.io.IOException;
@@ -26,13 +26,9 @@ public class Wc extends Command {
      * Wc implementation details: when invoked without arguments, wc tries to count lines, words and size in bytes in
      * its input stream (either passed explicitly or stdin). Otherwise it interprets the first arguments as a file path
      * and count lines, words and size in bytes in this file (if exists).
-     * @param scope
-     * @param inStrem
-     * @return
-     * @throws Exception
      */
     @Override
-    public String execute(Scope scope, String inStrem)throws IOException, BadArguments {
+    public String execute(Scope scope, String inStrem) throws IOException, BadArgumentsException {
 
         String result = "";
         if (arguments.size() == 0 && inStrem.equals("")) {
@@ -52,7 +48,7 @@ public class Wc extends Command {
                 throw new IOException(arguments.get(0) + ": Not such file");
             }
         } else {
-            throw new BadArguments("wc");
+            throw new BadArgumentsException("wc");
         }
 
         final byte[] utf8Bytes = result.getBytes("UTF-8");

@@ -2,9 +2,8 @@ package ru.spbau.mit.parse;
 
 import ru.spbau.mit.command.Command;
 import ru.spbau.mit.command.Equals;
-import ru.spbau.mit.exceptions.BadArguments;
-import ru.spbau.mit.exceptions.BadCommand;
-import ru.spbau.mit.exceptions.UnbalancedQuotes;
+import ru.spbau.mit.exceptions.BadCommandException;
+import ru.spbau.mit.exceptions.UnbalancedQuotesException;
 import ru.spbau.mit.execute.Scope;
 
 import java.lang.reflect.Constructor;
@@ -33,7 +32,7 @@ public class CommandBuilder {
      * @param proc the raw user input string
      * @return the list of commands that are ready to be executed
      */
-    public List<Command> buildChainOfCommand(Scope scope, String proc) throws UnbalancedQuotes, BadCommand {
+    public List<Command> buildChainOfCommand(Scope scope, String proc) throws UnbalancedQuotesException, BadCommandException {
         List<String> tokens = par.parse(proc);
         tokens = lex.expand(scope, tokens);
 
@@ -67,7 +66,7 @@ public class CommandBuilder {
     }
 
 
-    private Command makeCommand(String name, List<String> arguments) throws BadCommand {
+    private Command makeCommand(String name, List<String> arguments) throws BadCommandException {
 
         String className = "ru.spbau.mit.command." + name.substring(0, 1).toUpperCase() + name.substring(1);
         Command cmd = null;
@@ -83,7 +82,7 @@ public class CommandBuilder {
             Constructor cons = newClass.getConstructor(List.class);
             cmd = (Command)cons.newInstance(arguments);
             } catch (Exception exc1) {
-                new BadCommand(name);
+                 throw new BadCommandException(name);
             }
         }
 

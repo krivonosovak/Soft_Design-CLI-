@@ -1,7 +1,7 @@
 package ru.spbau.mit.command;
 
 
-import ru.spbau.mit.exceptions.BadArguments;
+import ru.spbau.mit.exceptions.BadArgumentsException;
 import ru.spbau.mit.execute.Scope;
 
 import java.io.IOException;
@@ -22,16 +22,12 @@ public class Cat extends Command{
 
     /**
      * See Command.
-     *
      * Cat implementation details: when executing Cat without any arguments it tries to print whatever comes to its
      * input stream (either provided beforehand or from stdin). Otherwise the first argument is treated as a filename
      * that is loaded into memory and which contents gets printed to the output.
-     * @param scope
-     * @param inStream
-     * @throws  // тут поправить с исключением
      */
     @Override
-    public String execute(Scope scope, String inStream) throws IOException, BadArguments {
+    public String execute(Scope scope, String inStream) throws IOException, BadArgumentsException {
 
         String result = "";
 
@@ -52,9 +48,8 @@ public class Cat extends Command{
                 throw new IOException(arguments.get(0) + ": Not such file"); // тут нужно создать свое исключение
             }
         } else {
-            throw new BadArguments("cat");
+            throw new BadArgumentsException("cat");
         }
-
         return result;
     }
 }

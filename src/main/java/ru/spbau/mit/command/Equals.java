@@ -10,13 +10,12 @@ import java.util.List;
  */
 public class Equals extends Command{
 
-    String var;
-    String value;
+    private String var;
+    private String value;
 
     /**
      * Equals takes exactly 2 arguments: the first one is a variable name and the second one is a new value to be
      * binded to this variable
-     * @param arguments
      */
     public Equals(List<String> arguments)  {
         super(arguments);
@@ -27,8 +26,6 @@ public class Equals extends Command{
     /**
      * Modifies the given scope by registering the new value for the given variable. Always returns an empty string and
      * does not read anything from input.
-     * @param scope
-     * @param inStream
      */
     @Override
     public String execute(Scope scope, String inStream)

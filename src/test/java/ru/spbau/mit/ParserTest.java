@@ -2,7 +2,7 @@ package ru.spbau.mit;
 
 
 import org.junit.Test;
-import ru.spbau.mit.exceptions.UnbalancedQuotes;
+import ru.spbau.mit.exceptions.UnbalancedQuotesException;
 import ru.spbau.mit.parse.Parser;
 
 import java.util.List;
@@ -13,7 +13,7 @@ public class ParserTest {
 
 
     @Test
-    public void parseEmptyString() throws UnbalancedQuotes {
+    public void parseEmptyString() throws UnbalancedQuotesException {
         // given
         String input = "";
         Parser parser = new Parser();
@@ -24,7 +24,7 @@ public class ParserTest {
     }
 
     @Test
-    public void parseAssignment() throws UnbalancedQuotes {
+    public void parseAssignment() throws UnbalancedQuotesException {
         // given
         String input = "foo=bar test";
         Parser parser = new Parser();
@@ -37,7 +37,7 @@ public class ParserTest {
 
 
     @Test
-    public void parseAssignmentWhitespace() throws UnbalancedQuotes {
+    public void parseAssignmentWhitespace() throws UnbalancedQuotesException {
         // given
         Parser parser = new Parser();
         String input = "foo = bar";
@@ -48,7 +48,7 @@ public class ParserTest {
     }
 
     @Test
-    public void parsePipes() throws UnbalancedQuotes {
+    public void parsePipes() throws UnbalancedQuotesException {
         // given
         Parser parser = new Parser();
         String input = "foo=bar | test | another";
@@ -60,7 +60,7 @@ public class ParserTest {
     }
 
     @Test
-    public void parsePipesWhitespace() throws UnbalancedQuotes {
+    public void parsePipesWhitespace() throws UnbalancedQuotesException {
         // given
         Parser parser = new Parser();
         String input = "echo $foo |       test |         another";
@@ -72,7 +72,7 @@ public class ParserTest {
     }
 
     @Test
-    public void parseQuotes() throws UnbalancedQuotes {
+    public void parseQuotes() throws UnbalancedQuotesException {
         // given
         Parser parser = new Parser();
         String input = "echo \"$foo\" '|       test |'         another";

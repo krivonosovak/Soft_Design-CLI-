@@ -2,9 +2,9 @@ package ru.spbau.mit;
 
 import org.apache.commons.cli.*;
 import ru.spbau.mit.command.Command;
-import ru.spbau.mit.exceptions.BadArguments;
-import ru.spbau.mit.exceptions.BadCommand;
-import ru.spbau.mit.exceptions.UnbalancedQuotes;
+import ru.spbau.mit.exceptions.BadArgumentsException;
+import ru.spbau.mit.exceptions.BadCommandException;
+import ru.spbau.mit.exceptions.UnbalancedQuotesException;
 import ru.spbau.mit.execute.Executor;
 import ru.spbau.mit.execute.Scope;
 import ru.spbau.mit.parse.*;
@@ -19,10 +19,8 @@ public class CLI {
 
     /**
      * The main workflow method of this utility
-     * @param args ignored
      */
     public static void main(String[] args) throws ParseException {
-
         Scanner scanner = new Scanner(System.in);
         CommandBuilder cb = new CommandBuilder();
         Executor ex = new Executor();
@@ -34,7 +32,7 @@ public class CLI {
                 List<Command> lc = cb.buildChainOfCommand(scope, command);
                 String result = ex.exec(scope, lc);
                 System.out.println(result);
-            } catch (IOException | BadCommand | UnbalancedQuotes | BadArguments e) {
+            } catch (IOException | BadCommandException | UnbalancedQuotesException | BadArgumentsException e) {
                 System.out.println(e.getMessage());
             }
         }
