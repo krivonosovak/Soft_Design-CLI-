@@ -39,12 +39,15 @@ public class GrepTest {
         }
         List<String> arguments = Arrays.asList("foo", filename);
         // when
-        Grep grep = new Grep(arguments);
-        String output = grep.execute(scope, "");
-        // then
-        assertEquals(input, output);
-        // cleanup
-        new File(filename).delete();
+        try {
+            Grep grep = new Grep(arguments);
+            String output = grep.execute(scope, "");
+            // then
+            assertEquals(input, output);
+        } finally {
+            // cleanup
+            new File(filename).delete();
+        }
     }
 
     @Test

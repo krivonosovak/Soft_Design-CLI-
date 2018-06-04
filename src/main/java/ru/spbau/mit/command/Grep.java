@@ -57,7 +57,7 @@ public class Grep extends Command {
     private String getMatchLines(Pattern pattern, List<String> lines) {
         StringBuffer sb = new StringBuffer();
         int nextLine = 1;
-
+        boolean match = false;
         for (String line: lines) {
             String searchLine = line;
             if (isIgnorCase) {
@@ -66,7 +66,8 @@ public class Grep extends Command {
             if (pattern.matcher(searchLine).find()) {
                 nextLine  = 1;
                 sb.append(line + "\n");
-            } else if (nextLine <= lineCount) {
+                match = true;
+            } else if (match && nextLine <= lineCount) {
                 sb.append(line + "\n");
                 nextLine++;
             }

@@ -36,10 +36,13 @@ public class CatTest {
         }
         List<String> arguments = Arrays.asList("temp_file_testWithArgumentsNoInput.txt");
         // when
-        Cat cat = new Cat(arguments);
-        String output = cat.execute(scope, "");
-        // then
-        assertEquals("sample text", output);
-        new File("temp_file_testWithArgumentsNoInput.txt").delete();
+        try {
+            Cat cat = new Cat(arguments);
+            String output = cat.execute(scope, "");
+            // then
+            assertEquals("sample text", output);
+        } finally {
+            new File("temp_file_testWithArgumentsNoInput.txt").delete();
+        }
     }
 }
