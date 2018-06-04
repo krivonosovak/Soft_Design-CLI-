@@ -11,6 +11,8 @@ import ru.spbau.mit.parse.*;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * The main class that parses user input, maps it into commands and executes them.
@@ -21,6 +23,7 @@ public class CLI {
      * The main workflow method of this utility
      */
     public static void main(String[] args) throws ParseException {
+
         Scanner scanner = new Scanner(System.in);
         CommandBuilder cb = new CommandBuilder();
         Executor ex = new Executor();

@@ -28,8 +28,7 @@ public class Equals extends Command{
      * does not read anything from input.
      */
     @Override
-    public String execute(Scope scope, String inStream)
-    {
+    public String execute(Scope scope, String inStream) {
         scope.add(var, value);
         return "";
     }

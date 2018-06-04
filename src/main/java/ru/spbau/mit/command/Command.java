@@ -1,5 +1,6 @@
 package ru.spbau.mit.command;
 
+import org.apache.commons.cli.ParseException;
 import ru.spbau.mit.exceptions.BadArgumentsException;
 import ru.spbau.mit.execute.Scope;
 
